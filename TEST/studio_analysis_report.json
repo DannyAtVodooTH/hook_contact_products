@@ -1,0 +1,389 @@
+{
+  "summary": {
+    "total_studio_fields": 19,
+    "fields_with_data": 11,
+    "fields_without_data": 8
+  },
+  "fields": [
+    {
+      "id": 12111,
+      "name": "x_studio_billing_number",
+      "model": "account.move",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Journal Entry",
+      "analysis": {
+        "total_records": 163,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12080,
+      "name": "x_studio_central_dc",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12068,
+      "name": "x_studio_central_group",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 11899,
+      "name": "x_studio_consignment_group",
+      "model": "res.partner",
+      "ttype": "selection",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": "[('Villa Group', 'Villa Group'), ('Central Group', 'Central Group'), ('Rimping Group', 'Rimping Group'), ('Tha Mall Group', 'Tha Mall Group'), ('Central DC', 'Central DC')]",
+      "help": false,
+      "translate": false,
+      "model_display_name": "Contact",
+      "analysis": {
+        "total_records": 1103,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12043,
+      "name": "x_studio_fda_no",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 120,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12090,
+      "name": "x_studio_how_to_eat",
+      "model": "product.template",
+      "ttype": "text",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 86,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12095,
+      "name": "x_studio_how_to_prepare",
+      "model": "product.template",
+      "ttype": "text",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 81,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12086,
+      "name": "x_studio_ingredients",
+      "model": "product.template",
+      "ttype": "text",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 85,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12055,
+      "name": "x_studio_label_print",
+      "model": "product.template",
+      "ttype": "text",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 275,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12072,
+      "name": "x_studio_rimping_group",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12051,
+      "name": "x_studio_shelf_life",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 13,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12099,
+      "name": "x_studio_special_information",
+      "model": "product.template",
+      "ttype": "text",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 52,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12059,
+      "name": "x_studio_temp_control",
+      "model": "product.template",
+      "ttype": "selection",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": "[('-18', '-18'), ('4', '4'), ('5', '5'), ('25', '25')]",
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 268,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12047,
+      "name": "x_studio_temp_control_2",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12076,
+      "name": "x_studio_the_mall_group",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12064,
+      "name": "x_studio_villa_group",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 1,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12084,
+      "name": "x_studio_weight",
+      "model": "stock.lot",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Lot/Serial",
+      "analysis": {
+        "total_records": 15482,
+        "non_null_values": 0,
+        "has_data": false,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12103,
+      "name": "x_studio_weight_max_g",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 73,
+        "has_data": true,
+        "sample_values": []
+      }
+    },
+    {
+      "id": 12107,
+      "name": "x_studio_weight_min_g",
+      "model": "product.template",
+      "ttype": "char",
+      "relation": false,
+      "store": true,
+      "required": false,
+      "readonly": false,
+      "selection": false,
+      "help": false,
+      "translate": false,
+      "model_display_name": "Product",
+      "analysis": {
+        "total_records": 294,
+        "non_null_values": 73,
+        "has_data": true,
+        "sample_values": []
+      }
+    }
+  ]
+}

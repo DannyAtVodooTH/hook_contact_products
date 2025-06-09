@@ -1,6 +1,14 @@
 # Claude Development Guidelines
 
-guidelines for python script based data processing
+Guidelines for python script based data processing for Odoo development
+
+## Environment Setup
+- **Working Directory**: `/Users/dgoo2308/git/hook_fix`
+- **Local Odoo**: `/Users/dgoo2308/git/odoo18` 
+- **Custom Addons**: Located in hook directory within odoo18
+- **Database**: `hook_local` (configured in odoo.conf)
+- **Config**: `~/.odoo_config/hook_local.conf` (DO NOT edit - read only via `_config.py`)
+- **Connection**: Use `connect_odoo('hook_local')` from `_config.py` for all XML-RPC connections
 
 ## Working Together Rules
 
@@ -76,9 +84,10 @@ hook_fix/
 ```
 
 ### Hook Odoo Instance Configuration
-- **Config file**: `~/.odoo_config/hook.conf`
-- **Instance name**: 'hook' (used in _config.py calls)
-- **Access pattern**: Use `connect_odoo('hook')` for connections
+- **Config file**: `~/.odoo_config/hook_local.conf`
+- **Database name**: `hook_local`
+- **Instance name**: 'hook_local' (used in _config.py calls)
+- **Access pattern**: Use `connect_odoo('hook_local')` for connections
 - **Security**: NEVER read config files in scripts - they contain credentials
 
 ### Contact Classification Rules
@@ -107,8 +116,8 @@ hook_fix/
 
 ### Odoo API Patterns for This Project
 ```python
-# Connect to Hook instance
-models, db, uid, password = connect_odoo('hook')
+# Connect to Hook local instance
+models, db, uid, password = connect_odoo('hook_local')
 
 # Search for vendor references
 vendor_ids = models.execute_kw(
