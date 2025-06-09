@@ -1,134 +1,76 @@
 #!/usr/bin/env python3
 """
-Odoo Configuration Module
-Reads connection settings from ~/.odoo_config/{instance}.conf or environment variables
-Environment variables take priority over config file values.
+Odoo Connection Configuration
+Single configuration module for all Odoo connections via XML-RPC
 """
 
-import os
-import configparser
 import xmlrpc.client
+import configparser
+import os
+from pathlib import Path
 
-
-def load_odoo_config(instance_name='kdm'):
-    """
-    Load Odoo connection configuration from standard location or environment
+def get_config(instance_name):
+    """Read configuration from ~/.odoo_config/{instance_name}.conf"""
+    config_path = Path.home() / '.odoo_config' / f'{instance_name}.conf'
     
-    Args:
-        instance_name (str): Name of the instance config file (default: 'kdm')
-                            Will load from ~/.odoo_config/{instance_name}.conf
+    if not config_path.exists():
+        raise FileNotFoundError(f"Config file not found: {config_path}")
     
-    Environment variables (take priority):
-        ODOO_DB - Database name
-        ODOO_URL - Odoo server URL  
-        ODOO_USER - Username
-        ODOO_PASSWORD - Password
-    """
-    config_path = os.path.expanduser(f'~/.odoo_config/{instance_name}.conf')
-    
-    # Initialize config with environment variables (highest priority)
-    config_data = {
-        'url': os.getenv('ODOO_URL'),
-        'database': os.getenv('ODOO_DB'), 
-        'username': os.getenv('ODOO_USER'),
-        'password': os.getenv('ODOO_PASSWORD')
-    }
-    
-    # Load from config file if it exists and fill missing values
-    if os.path.exists(config_path):
-        config = configparser.ConfigParser()
-        config.read(config_path)
-        
-        if 'odoo' in config:
-            # Only use config file values if not already set by environment
-            if not config_data['url']:
-                config_data['url'] = config.get('odoo', 'url', fallback=None)
-            if not config_data['database']:
-                config_data['database'] = config.get('odoo', 'database', fallback=None)
-            if not config_data['username']:
-                config_data['username'] = config.get('odoo', 'username', fallback=None)
-            if not config_data['password']:
-                config_data['password'] = config.get('odoo', 'password', fallback=None)
-    
-    # Validate required fields
-    missing_fields = [key for key, value in config_data.items() if not value]
-    if missing_fields:
-        raise ValueError(
-            f"Missing Odoo configuration: {', '.join(missing_fields)}\n"
-            f"Please set environment variables or create {config_path} with:\n"
-            "[odoo]\n"
-            "url = https://your-odoo-instance.com\n"
-            "database = your_database\n"
-            "username = your_username\n"
-            "password = your_password\n"
-        )
-    
-    return config_data
-
-
-def connect_odoo(instance_name='kdm'):
-    """
-    Connect to Odoo using configuration for specified instance
-    
-    Args:
-        instance_name (str): Name of the instance config (default: 'kdm')
-        
-    Returns:
-        tuple: (models, database, uid, password)
-    """
-    config = load_odoo_config(instance_name)
-    
-    try:
-        common = xmlrpc.client.ServerProxy(f"{config['url']}/xmlrpc/2/common")
-        uid = common.authenticate(config['database'], config['username'], 
-                                config['password'], {})
-        
-        if not uid:
-            raise Exception("Authentication failed - check username/password")
-        
-        models = xmlrpc.client.ServerProxy(f"{config['url']}/xmlrpc/2/object")
-        
-        return models, config['database'], uid, config['password']
-        
-    except Exception as e:
-        raise Exception(f"Failed to connect to Odoo: {e}")
-
-
-def test_connection(instance_name='kdm'):
-    """
-    Test Odoo connection and return user info
-    
-    Args:
-        instance_name (str): Name of the instance config (default: 'kdm')
-    """
-    models, db, uid, password = connect_odoo(instance_name)
-    
-    # Test connection by getting user info
-    user_info = models.execute_kw(db, uid, password, 'res.users', 'read', [uid], 
-                                 {'fields': ['name', 'login']})
+    config = configparser.ConfigParser()
+    config.read(config_path)
     
     return {
-        'user_id': uid,
-        'name': user_info[0]['name'],
-        'login': user_info[0]['login'],
-        'database': db,
-        'instance': instance_name
+        'url': config.get('odoo', 'url'),
+        'database': config.get('odoo', 'database'), 
+        'username': config.get('odoo', 'username'),
+        'password': config.get('odoo', 'password')
     }
 
+def connect_odoo(instance_name):
+    """Connect to Odoo instance and return API objects"""
+    config = get_config(instance_name)
+    
+    # Setup XML-RPC clients
+    common = xmlrpc.client.ServerProxy(f"{config['url']}/xmlrpc/2/common")
+    models = xmlrpc.client.ServerProxy(f"{config['url']}/xmlrpc/2/object")
+    
+    # Authenticate
+    uid = common.authenticate(config['database'], config['username'], config['password'], {})
+    
+    if not uid:
+        raise Exception(f"Authentication failed for {config['username']} on {config['database']}")
+    
+    return models, config['database'], uid, config['password']
 
-if __name__ == "__main__":
-    # Test the connection
-    import sys
-    
-    # Allow specifying instance name as command line argument
-    instance = sys.argv[1] if len(sys.argv) > 1 else 'kdm'
-    
+def test_connection(instance_name):
+    """Test connection and return basic info"""
     try:
-        info = test_connection(instance)
-        print(f"✅ Connection successful!")
-        print(f"   Instance: {info['instance']}")
-        print(f"   User: {info['name']} ({info['login']})")
-        print(f"   Database: {info['database']}")
-        print(f"   User ID: {info['user_id']}")
+        config = get_config(instance_name)
+        common = xmlrpc.client.ServerProxy(f"{config['url']}/xmlrpc/2/common")
+        
+        # Test connection
+        version = common.version()
+        
+        # Test authentication
+        uid = common.authenticate(config['database'], config['username'], config['password'], {})
+        if not uid:
+            raise Exception("Authentication failed")
+        
+        # Get user info
+        models = xmlrpc.client.ServerProxy(f"{config['url']}/xmlrpc/2/object")
+        user_info = models.execute_kw(
+            config['database'], uid, config['password'],
+            'res.users', 'read', [uid], {'fields': ['name', 'login']}
+        )[0]
+        
+        return {
+            'instance': instance_name,
+            'database': config['database'],
+            'user_id': uid,
+            'name': user_info['name'],
+            'login': user_info['login'],
+            'version': version.get('server_version', 'unknown')
+        }
+        
     except Exception as e:
-        print(f"❌ Connection failed: {e}")
+        raise Exception(f"Connection test failed: {e}")
