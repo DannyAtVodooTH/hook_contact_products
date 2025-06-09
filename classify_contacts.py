@@ -22,6 +22,8 @@ def main():
                        help='Show what would be updated without making changes (default)')
     parser.add_argument('--execute', action='store_true',
                        help='Actually perform the updates')
+    parser.add_argument('--production', action='store_true',
+                       help='Connect to production instance (hook_production) instead of staging (hook)')
     
     args = parser.parse_args()
     
@@ -41,8 +43,9 @@ def main():
     
     try:
         # Connect to Hook Odoo instance
-        print("🔌 Connecting to Hook Odoo...")
-        models, db, uid, password = connect_odoo('hook')
+        instance = 'hook_production' if '--production' in sys.argv else 'hook'
+        print(f"🔌 Connecting to Hook Odoo ({instance})...")
+        models, db, uid, password = connect_odoo(instance)
         print("✅ Connected successfully")
         
         # Run classification
