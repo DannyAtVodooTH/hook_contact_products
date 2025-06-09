@@ -79,6 +79,7 @@ hook_fix/
 - **Config file**: `~/.odoo_config/hook.conf`
 - **Instance name**: 'hook' (used in _config.py calls)
 - **Access pattern**: Use `connect_odoo('hook')` for connections
+- **Security**: NEVER read config files in scripts - they contain credentials
 
 ### Contact Classification Rules
 - **Vendor Pattern**: Reference field starts with "V" (V1234, V5678, etc.)
